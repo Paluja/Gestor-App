@@ -53,13 +53,14 @@ const AuthProvider = ({ children }) => {
             const response = await fetch('/api/admin/auth', {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${jwt}`,
+                    'Authorization': `${jwt}`,
                 },
             });
             if (response.status === 200) {
                 const adminData = await response.json();
                 setAdmin(adminData);
                 console.log('Admin authenticated successfully');
+                navigate('/admin/dashboard');
             } else {
                 console.error('Failed to authenticate admin');
             }
