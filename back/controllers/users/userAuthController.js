@@ -1,20 +1,21 @@
-const adminData = require('../services/dao/adminDao');
+const userData = require("../../services/dao/userDao");
 const { SignJWT, jwtVerify } = require('jose');
 const md5 = require('md5');
-let admin = [];
 
-const adminToken = async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return res.status(400).send('Email and password required');
+
+const userToken = async (req, res) => {
+    const { name, password } = req.body;
+    if (!name || !password) {
+        return res.status(400).send('Name and password required');
     }
 
     try {
-        const { id_admin } = await adminData.login(email, password);
-        if (!id_admin) {
+        const { id_users} = await userData.login(name, password);
+        // console.log('name:', name, 'password:', password);
+        if (!id_users) {
             return res.status(401).send('Invalid credentials');
         }
-        const jwtConstructor = new SignJWT({id_admin: id_admin.toString()});
+        const jwtConstructor = new SignJWT({id_users: id_users.toString()});
         const encoder = new TextEncoder();
 
         const jwt = await jwtConstructor
@@ -30,9 +31,8 @@ const adminToken = async (req, res) => {
 }
 
 
-const authAdmin = async(req,res) =>{
+const authUser = async(req,res) =>{
     const token = req.headers.authorization;
-    console.log(token);
     if (!token) return res.sendStatus(401);
     try {
         const encoder = new TextEncoder();
@@ -40,22 +40,23 @@ const authAdmin = async(req,res) =>{
             token,
             encoder.encode(process.env.JWT_SECRET)
         );
-        const admin = await adminData.getAdminById(payload.id_admin);
-        if (!admin) return res.sendStatus(401);
-        delete admin.passwd;
-        return res.status(200).send(admin);
+        
+        const user = await userData.getUserById(payload.id_users);
+        if (!user) return res.sendStatus(401);
+        delete user.passwd;
+        return res.status(200).send(user);
     } catch (error) {
         return res.sendStatus(401);
     }
 }
 
-const registerAdmin = async (req, res) => {
-    const { email, password, name } = req.body;
-    if (!email || !password || !name) return res.status(400).send('Email, password and name required');
+const registerUser = async (req, res) => {
+    const { name, password ,id_admin} = req.body;
+    if (!name || !password || id_admin) return res.status(400).send('Name, password and admin that created, required');
     try {
         const hashedPassword = md5(password);
-        const newAdmin = { email:email, passwd: hashedPassword, name:name };
-        await adminData.insertAdmin(newAdmin);
+        const newUser = { name:name, passwd: hashedPassword,id_admin:id_admin };
+        await userData.insertUser(newUser);
         console.log('Admin registered successfully');
         return res.status(200);
     } catch (error) {
@@ -65,4 +66,5 @@ const registerAdmin = async (req, res) => {
 }
 
 
-module.exports = { adminToken, authAdmin, registerAdmin };
+
+module.exports = { userToken, authUser, registerUser };

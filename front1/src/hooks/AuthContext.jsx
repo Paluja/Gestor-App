@@ -1,11 +1,17 @@
 import React, { createContext, useContext, useEffect } from 'react';
 import { useState } from 'react';
-import { navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const AuthContext = createContext();
+const AuthContext = createContext({});
 
-const AuthProvider = ({ children }) => {
+export const useAuth = () => {
+    return useContext(AuthContext);
+};
+
+export const AuthProvider = ({ children }) => {
+    // const navigate  = useNavigate();
     const [admin, setAdmin] = useState(null);
+    const [auth, setAuth] = useState(false);
     const [jwt,setJWT] = useState(null);
 
     const registerAdmin = async (admin) =>{
@@ -19,7 +25,7 @@ const AuthProvider = ({ children }) => {
             });
             if (response.ok){
                 console.log('Admin registered successfully');
-                navigate('/admin/login');
+                // navigate('/admin/login');
             }
         } catch (error) {
             console.error('Error register admin',error);
@@ -28,7 +34,7 @@ const AuthProvider = ({ children }) => {
 
      const loginAdmin = async (email, password) => {
         try {
-            const response = await fetch('/api/admin/login', {
+            const response = await fetch('http://localhost:3000/admin/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,7 +56,7 @@ const AuthProvider = ({ children }) => {
 
     const authAdmin = async () => {
         try {
-            const response = await fetch('/api/admin/auth', {
+            const response = await fetch('http://localhost:3000/admin/auth', {
                 method: 'GET',
                 headers: {
                     'Authorization': `${jwt}`,
@@ -60,10 +66,11 @@ const AuthProvider = ({ children }) => {
                 const adminData = await response.json();
                 setAdmin(adminData);
                 console.log('Admin authenticated successfully');
-                navigate('/admin/dashboard');
+                // navigate('/admin/dashboard');
             } else {
                 console.error('Failed to authenticate admin');
             }
+            setAuth(true);
         } catch (error) {
             console.error('Error authenticating admin:', error);
         }
@@ -76,7 +83,7 @@ const AuthProvider = ({ children }) => {
     }, [jwt]);
 
     return (
-        <AuthContext.Provider value={{ admin, registerAdmin, loginAdmin, jwt }}>
+        <AuthContext.Provider value={{ admin, registerAdmin, loginAdmin, jwt, auth }}>
             {children}
         </AuthContext.Provider>
     ); 

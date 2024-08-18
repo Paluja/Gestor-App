@@ -67,7 +67,7 @@ adminDao.login = async (email, passwd) => {
         conn = await db.createConnection();
         console.log("email: ", email);
         console.log("passwd: ", passwd);
-        const [result] = await db.query(`SELECT * FROM admin WHERE email = ? AND passwd = ?`,[email, md5(passwd)],'select', conn);
+        const [result] = await db.query(`SELECT * FROM admin WHERE email = ? AND passwd = ?`,[email, (passwd)],'select', conn);
         console.log('result',result);
         return result;
     } catch (error) {
