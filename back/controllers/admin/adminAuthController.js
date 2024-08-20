@@ -10,8 +10,8 @@ const adminToken = async (req, res) => {
     }
 
     try {
-        const { id_admin } = await adminData.login(email, password);
         console.log('email:', email, 'password:', password);
+        const { id_admin } = await adminData.login(email, md5(password));
         if (!id_admin) {
             return res.status(401).send('Invalid credentials');
         }
@@ -57,8 +57,7 @@ const registerAdmin = async (req, res) => {
         const hashedPassword = md5(password);
         const newAdmin = { email:email, passwd: hashedPassword, name:name };
         await adminData.insertAdmin(newAdmin);
-        console.log('Admin registered successfully');
-        return res.status(200);
+        return res.status(200).json({message: 'Admin registered successfully'});
     } catch (error) {
         console.error('Error registering admin:', error);
         return res.status(500).send('Internal server error');

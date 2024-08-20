@@ -5,21 +5,13 @@ const md5 = require('md5');
 
 
 const getTaskByUserId = async (req, res) => {
-    const token = req.headers.authorization;
-    if (!token) return res.sendStatus(401);
+    const id = req.params.id;
+    if (!id) return res.sendStatus(401);
     try {
-        const encoder = new TextEncoder();
-        const { payload }  = await jwtVerify(
-            token,
-            encoder.encode(process.env.JWT_SECRET)
-        );
-        const tasks = await tasksData.getTaskByUserId(payload.id_users);
+        
+        const tasks = await tasksData.getTaskByUserId(id);
         return res.status(200).send(tasks);
     } catch (error) {
-        if (error.code === 'ERR_JWT_EXPIRED') {
-            console.error('JWT expired:', error);
-            return res.status(401).send('Token expired');
-        }
         console.error('Error getTaskByUserId:', error);
         return res.status(500).send('Internal server error');
     }
@@ -86,5 +78,38 @@ const getAllTasks = async (req, res) => {
     }
 }
 
+const getCompletedTasks = async (req, res) => {
+    try {
+        const result = await tasksData.getCompletedTasks();
+        return res.status(200).send(result);
+    }
+    catch (error) {
+        console.error('Error getCompletedTasks:', error);
+        return res.status(500).send('Internal server error');
+    }
+}
 
-module.exports = {getTaskByUserId, getTaskByAdminId, insertTask, deleteTask, getAllTasks};
+const getPendingTasks = async (req, res) => {
+    try {
+        const result = await tasksData.getPendingTasks();
+        return res.status(200).send(result);
+    }
+    catch (error) {
+        console.error('Error getPendingTasks:', error);
+        return res.status(500).send('Internal server error');
+    }
+}
+
+
+const getToDoTasks = async (req, res) => {
+    try {
+        const result = await tasksData.getToDoTasks();
+        return res.status(200).send(result);
+    }
+    catch (error) {
+        console.error('Error getToDoTasks:', error);
+        return res.status(500).send('Internal server error');
+    }
+}
+
+module.exports = {getTaskByUserId, getTaskByAdminId, insertTask, deleteTask, getAllTasks, getCompletedTasks, getPendingTasks, getToDoTasks};

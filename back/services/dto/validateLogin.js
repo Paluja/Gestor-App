@@ -42,7 +42,13 @@ const validate = ajv.compile(LoginDTOSchema);
 
 const validateLoginDto = (req, res, next) => {
     const isDTOValid = validate(req.body);
-    if (!isDTOValid) return res.status(400).send(ajv.errorsText(validate.errors, { separator: '\n' }));
+    if (!isDTOValid) {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid data',
+            errors: ajv.errorsText(validate.errors, { separator: '\n' })
+        });
+    }
     next();
 }
   

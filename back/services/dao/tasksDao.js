@@ -97,4 +97,46 @@ tasksDao.getAllTasks = async () => {
     }
 }
 
+tasksDao.getCompletedTasks = async () => {
+    let conn = null;
+    try{
+        conn = await db.createConnection();
+        const result = await db.query( `SELECT * FROM tasks WHERE verified = 1 && done = 1;`,[],'select',conn);
+        return result;
+    } catch (error) {
+        console.error("Error getCompletedTasks: ", error);
+        throw new Error(error.message);
+    } finally{
+        conn && conn.end();
+    }
+}
+
+tasksDao.getPendingTasks = async () => {
+    let conn = null;
+    try{
+        conn = await db.createConnection();
+        const result = await db.query( `SELECT * FROM tasks WHERE verified = 0 && done = 1;`,[],'select',conn);
+        return result;
+    } catch (error) {
+        console.error("Error getPendingTasks: ", error);
+        throw new Error(error.message);
+    } finally{
+        conn && conn.end();
+    }
+}
+
+tasksDao.getToDoTasks = async () => {
+    let conn = null;
+    try{
+        conn = await db.createConnection();
+        const result = await db.query( `SELECT * FROM tasks WHERE done = 0 && verified = 0;`,[],'select',conn);
+        return result;
+    } catch (error) {
+        console.error("Error getToDoTasks: ", error);
+        throw new Error(error.message);
+    } finally{
+        conn && conn.end();
+    }
+}
+
 module.exports = tasksDao;

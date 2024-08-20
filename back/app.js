@@ -4,15 +4,19 @@ const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const cors = require('cors');
 
-const adminAuthRouter = require('./router/adminAuthRouter');
-const userAuthRouter = require('./router/userAuthRouter');
+const adminAuthRouter = require('./router/adminRouter');
+const userAuthRouter = require('./router/userRouter');
 const userTasksRouter = require('./router/tasks/userTasksRouter');
 
 const PORT = process.env.PORT
 const app = express()
 dotenv.config();
 
-app.use(cors());
+app.use(cors({
+    origin: '*', // Asegúrate de cambiar '*' a tu frontend en producción
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(logger('dev'))
 app.use(express.json())
 app.use(logger('dev'));

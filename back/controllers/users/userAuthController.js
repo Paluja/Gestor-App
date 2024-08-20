@@ -52,13 +52,20 @@ const authUser = async(req,res) =>{
 
 const registerUser = async (req, res) => {
     const { name, password ,id_admin} = req.body;
+    const token = req.headers.authorization;
+    if (!token) return res.sendStatus(401);
     if (!name || !password || id_admin) return res.status(400).send('Name, password and admin that created, required');
     try {
+        const encoder = new TextEncoder();
+        const { payload }  = await jwtVerify(
+            token,
+            encoder.encode(process.env.JWT_SECRET)
+        );
         const hashedPassword = md5(password);
-        const newUser = { name:name, passwd: hashedPassword,id_admin:id_admin };
+        const newUser = { name:name, passwd: hashedPassword,id_admin:payload.id_admin };
         await userData.insertUser(newUser);
-        console.log('Admin registered successfully');
-        return res.status(200);
+        console.log('User registered successfully');
+        return res.status(200).json({message: 'User registered successfully'});
     } catch (error) {
         console.error('Error registering admin:', error);
         return res.status(500).send('Internal server error');
@@ -66,5 +73,6 @@ const registerUser = async (req, res) => {
 }
 
 
+module.exports = {registerUser, authUser, userToken}
 
-module.exports = { userToken, authUser, registerUser };
+

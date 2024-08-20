@@ -60,11 +60,12 @@ userDao.insertUser = async (userData) => {
         let userObj = {
             name: userData.name,
             passwd: userData.passwd ? md5(userData.passwd) : undefined,
+            id_admin: userData.id_admin
         }
         const existingUser = await userDao.getAdminByName(userData.name);
         
         if(existingUser.length > 0){
-            throw new Error('Email ya registrado');
+            throw new Error('Miembro ya registrado');
         }
         const result = await db.query(`INSERT INTO users SET ?`, userObj,'insert', conn);
         return result;

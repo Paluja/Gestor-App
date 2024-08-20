@@ -1,5 +1,5 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from '../../hooks/AuthContext'
+import { Outlet } from "react-router-dom";
+import { useAuth } from '../../hooks/AuthAdminContext'
 
 
 function RequireAdminAuth() {

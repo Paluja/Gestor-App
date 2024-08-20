@@ -9,3 +9,8 @@ export const initialRegisterValues = {
     password: '',
     acceptedTc: false
 }
+
+export const initialLoginUserValues = {
+    name: '',
+    password: ''
+}
