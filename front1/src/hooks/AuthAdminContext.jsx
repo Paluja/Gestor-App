@@ -8,6 +8,7 @@ export const useAuth = () => {
     return useContext(AuthContext);
 };
 
+// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
     const navigate  = useNavigate();
     const [admin, setAdmin] = useState(null);
