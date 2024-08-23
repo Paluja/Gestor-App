@@ -1,7 +1,7 @@
 const adminData = require('../../services/dao/adminDao');
 const { SignJWT, jwtVerify } = require('jose');
 const md5 = require('md5');
-let admin = [];
+let revokedTokens = [];
 
 const adminToken = async (req, res) => {
     const { email, password } = req.body;
@@ -33,8 +33,8 @@ const adminToken = async (req, res) => {
 
 const authAdmin = async(req,res) =>{
     const token = req.headers.authorization;
-    console.log(token);
     if (!token) return res.sendStatus(401);
+    if (revokedTokens.includes(token)) return res.sendStatus(401);
     try {
         const encoder = new TextEncoder();
         const { payload }  = await jwtVerify(
@@ -64,5 +64,13 @@ const registerAdmin = async (req, res) => {
     }
 }
 
+const logoutAdmin = (req, res) => {
+    const token = req.headers.authorization;
+    if (!token) return res.status(400).send('Token required');
 
-module.exports = { adminToken, authAdmin, registerAdmin };
+    revokedTokens.push(token);
+    return res.status(200).send('Logged out successfully');
+};
+
+
+module.exports = { adminToken, authAdmin, registerAdmin,logoutAdmin };

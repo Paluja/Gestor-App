@@ -40,17 +40,23 @@ const getTaskByAdminId = async (req, res) => {
 
 const insertTask = async (req, res) => {
     
+    const token = req.headers.authorization;
+    if (!token) return res.sendStatus(401);
     try {
-        
+        const encoder = new TextEncoder();
+        const { payload }  = await jwtVerify(
+            token,
+            encoder.encode(process.env.JWT_SECRET)
+        );
         const task = {
             name: req.body.name,
             description: req.body.description,
             points: req.body.points,
             user_id: req.body.user_id,
-            id_admin: payload.id_admin
+            admin_id: payload.id_admin
         }
         const result = await tasksData.insertTask(task);
-        return res.status(200).send(result);
+        return res.sendStatus(200);
     } catch (error) {
         console.error('Error insertTask:', error);
         return res.status(500).send('Internal server error');
@@ -112,4 +118,26 @@ const getToDoTasks = async (req, res) => {
     }
 }
 
-module.exports = {getTaskByUserId, getTaskByAdminId, insertTask, deleteTask, getAllTasks, getCompletedTasks, getPendingTasks, getToDoTasks};
+const updateTask = async (req, res) => {
+    try {
+        const task = {
+            id_tasks: req.params.id,
+            name: req.body.name ? req.body.name : null,
+            description: req.body.description ? req.body.description : null,
+            points: req.body.points ? req.body.points : null,
+            user_id: req.body.user_id ? req.body.user_id : null,
+            id_admin: req.body.id_admin ? req.body.id_admin : null,
+            verified: req.body.verified ? req.body.verified : null,
+            done: req.body.done ? req.body.done : null
+        }
+        console.log('task:', task);
+        const result = await tasksData.updateTask(task);
+        return res.status(200).send(result);
+    } catch (error) {
+        console.error('Error updateTask:', error);
+        return res.status(500).send('Internal server error');
+    }
+}
+
+module.exports = {getTaskByUserId, getTaskByAdminId, insertTask, deleteTask, getAllTasks, 
+                getCompletedTasks, getPendingTasks, getToDoTasks, updateTask};

@@ -33,7 +33,12 @@ db.query = async (sqlQuery, params, type, conn) => {
           return JSON.parse(JSON.stringify(result))
         case 'insert':
           return parseInt(result.insertId)
-        // case 'update':
+        case 'update':
+          if (result.affectedRows > 0) {
+            return true
+          } else {
+            return false
+          }
         // case 'replace':
         case 'delete':
           if (result.affectedRows > 0) {
@@ -49,5 +54,5 @@ db.query = async (sqlQuery, params, type, conn) => {
       throw new Error(error.message)
     }
 }
-  
- module.exports = db
+
+module.exports = db

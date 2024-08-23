@@ -1,6 +1,8 @@
 const express = require('express');
 const userTasksRouter = express.Router();
-const { getTaskByUserId, getTaskByAdminId, insertTask, deleteTask, getAllTasks, getToDoTasks, getCompletedTasks, getPendingTasks } = require('../../controllers/tasksController');
+const { getTaskByUserId, getTaskByAdminId, insertTask, 
+        deleteTask, getAllTasks, getToDoTasks, getCompletedTasks, 
+        getPendingTasks, updateTask } = require('../../controllers/tasksController');
 
 
 userTasksRouter.get('/user/:id', getTaskByUserId);
@@ -11,6 +13,7 @@ userTasksRouter.get('/pending', getPendingTasks);
 userTasksRouter.get('/to-do', getToDoTasks);
 userTasksRouter.post('/add-task', insertTask);
 userTasksRouter.delete('delete-task/:id', deleteTask);
+userTasksRouter.put('/update-task/:id', updateTask);
 
 
 module.exports = userTasksRouter;

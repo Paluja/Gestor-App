@@ -42,7 +42,7 @@ tasksDao.insertTask = async (taskData) => {
             description: taskData.description,
             points: taskData.points,
             user_id: taskData.user_id,
-            id_admin: taskData.id_admin
+            admin_id: taskData.admin_id
         }
         const result = await db.query(`INSERT INTO tasks SET ?`, taskObj,'insert', conn);
         return result;
@@ -72,8 +72,43 @@ tasksDao.updateTask = async (taskData) => {
     let conn = null;
     try{
         conn = await db.createConnection();
-        const result = await db.query( `UPDATE tasks SET name = ?, description = ?, points = ?, user_id = ?, id_admin = ? WHERE id_tasks = ?;`,
-        [taskData.name, taskData.description, taskData.points, taskData.user_id, taskData.id_admin, taskData.id_tasks],'update',conn);
+        let query = 'UPDATE tasks SET ';
+        const params = [];
+
+        if (taskData.name) {
+            query += 'name = ?, ';
+            params.push(taskData.name);
+        }
+        if (taskData.description) {
+            query += 'description = ?, ';
+            params.push(taskData.description);
+        }
+        if (taskData.points) {
+            query += 'points = ?, ';
+            params.push(taskData.points);
+        }
+        if (taskData.user_id) {
+            query += 'user_id = ?, ';
+            params.push(taskData.user_id);
+        }
+        if (taskData.id_admin) {
+            query += 'id_admin = ?, ';
+            params.push(taskData.id_admin);
+        }
+        if(taskData.verified){
+            query += 'verified = ?, ';
+            params.push(taskData.verified);
+        }
+        if(taskData.done){
+            query += 'done = ?, ';
+            params.push(taskData.done);
+        }
+
+        query = query.slice(0, -2);
+        query += ' WHERE id_tasks = ?';
+        params.push(taskData.id_tasks);
+
+        const result = await db.query(query, params, 'update', conn);
         return result;
     } catch (error) {
         console.error("Error updateTask: ", error);

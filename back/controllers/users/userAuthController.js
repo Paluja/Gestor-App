@@ -1,6 +1,7 @@
 const userData = require("../../services/dao/userDao");
 const { SignJWT, jwtVerify } = require('jose');
 const md5 = require('md5');
+const revokedTokens = [];
 
 
 const userToken = async (req, res) => {
@@ -34,6 +35,7 @@ const userToken = async (req, res) => {
 const authUser = async(req,res) =>{
     const token = req.headers.authorization;
     if (!token) return res.sendStatus(401);
+    if (revokedTokens.includes(token)) return res.sendStatus(401);
     try {
         const encoder = new TextEncoder();
         const { payload }  = await jwtVerify(
@@ -72,7 +74,14 @@ const registerUser = async (req, res) => {
     }
 }
 
+const logoutUser = (req, res) => {
+    const token = req.headers.authorization;
+    if (!token) return res.sendStatus(401);
+    revokedTokens.push(token);
+    return res.sendStatus(200);
+}
 
-module.exports = {registerUser, authUser, userToken}
+
+module.exports = {registerUser, authUser, userToken, logoutUser};
 
 
