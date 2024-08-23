@@ -12,7 +12,7 @@ export const AuthUserProvider = ({ children }) => {
     // const navigate  = useNavigate();
     const [user, setUser] = useState(null);
     const [auth, setAuth] = useState(false);
-    const [jwt,setJWT] = useState(null);
+    const [jwtUser,setJWT] = useState(null);
     
 
     const loginUser = async (name, password) => {
@@ -42,7 +42,7 @@ export const AuthUserProvider = ({ children }) => {
             const response = await fetch('http://localhost:3000/user/auth', {
                 method: 'GET',
                 headers: {
-                    'Authorization': jwt,
+                    'Authorization': jwtUser,
                 },
             });
             if (response.status === 200) {
@@ -58,15 +58,54 @@ export const AuthUserProvider = ({ children }) => {
         }
     }
 
+    const getAllUsers = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/user/all', {
+                method: 'GET',
+                headers: {
+                    'Authorization': jwtUser,
+                },
+            });
+            if (response.status === 200) {
+                const data = await response.json();
+                return data;
+            } else {
+                console.error('Failed to get users');
+            }
+        } catch (error) {
+            console.error('Error getting users:', error);
+        }
+    }
+    
+    const logOutUser = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/user/logout', {
+                method: 'POST',
+                headers: {
+                    'Authorization': jwtUser,
+                },
+            });
+            if (response.status === 200) {
+                setJWT(null);
+                setUser(null);
+                setAuth(false);
+                console.log('User logged out successfully');
+            } else {
+                console.error('Failed to logout user');
+            }
+        } catch (error) {
+            console.error('Error logging out user:', error);
+        }
+    }
 
     useEffect(() => {
-        if (jwt) {
+        if (jwtUser) {
             authUser();
         }
-    }, [jwt]);
+    }, [jwtUser]);
 
     return (
-        <AuthUserContext.Provider value={{ user, auth, loginUser, authUser }}>
+        <AuthUserContext.Provider value={{ user, auth, loginUser, jwtUser,authUser, getAllUsers, logOutUser }}>
             {children}
         </AuthUserContext.Provider>
     );

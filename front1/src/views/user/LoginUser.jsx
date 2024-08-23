@@ -6,9 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 
 function LoginUser() {
-    const { loginUser } = useAuthUser();
+    const { loginUser} = useAuthUser();
     const navigate = useNavigate();
-
 
     const onSubmit = async (values, actions) => {
         await loginUser(values.name, values.password);

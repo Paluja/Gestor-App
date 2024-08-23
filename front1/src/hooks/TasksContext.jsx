@@ -10,10 +10,9 @@ export const useTaskContext = () => {
 
 
 export const TaskProvider = ({ children }) => {
-    const [tasks, setTasks] = useState(null);
-    const [adminTasks, setAdminTasks] = useState(null);
-    const [completedTasks, setCompletedTasks] = useState(null);
-    const [pendingTasks, setPendingTasks] = useState(null);
+    const [tasks, setTasks] = useState([]);
+    // const [adminTasks, setAdminTasks] = useState([]);
+
 
 
     const getTasks = async () => {
@@ -26,8 +25,8 @@ export const TaskProvider = ({ children }) => {
             });
             if (response.status === 200) {
                 const data = await response.json();
-                setTasks(data);
                 console.log('Tasks retrieved successfully');
+                return(data);
             } else {
                 console.error('Failed to retrieve tasks');
             }
@@ -66,8 +65,8 @@ export const TaskProvider = ({ children }) => {
             });
             if (response.status === 200) {
                 const data = await response.json();
-                setPendingTasks(data);
                 console.log('Pending tasks retrieved successfully');
+                return(data);
             } else {
                 console.error('Failed to retrieve pending tasks');
             }
@@ -86,8 +85,8 @@ export const TaskProvider = ({ children }) => {
             });
             if (response.status === 200) {
                 const data = await response.json();
-                // setUserTasks(data);
                 console.log('To-do tasks retrieved successfully');
+                return(data);
             } else {
                 console.error('Failed to retrieve to-do tasks');
             }
@@ -106,8 +105,8 @@ export const TaskProvider = ({ children }) => {
             });
             if (response.status === 200) {
                 const data = await response.json();
-                setCompletedTasks(data);
                 console.log('Completed tasks retrieved successfully');
+                return(data);
             } else {
                 console.error('Failed to retrieve completed tasks');
             }
@@ -116,8 +115,14 @@ export const TaskProvider = ({ children }) => {
         }
     }
 
+    useEffect(() => {
+        if (tasks.length === 0) {
+            getTasks();
+        }
+    }, [tasks]);
+
     return (
-        <TaskContext.Provider value={{ tasks, adminTasks, getCompletedTasks, pendingTasks, getTasks, getUserTasks, getPendingTasks, getToDoTasks }}>
+        <TaskContext.Provider value={{ tasks, getCompletedTasks, getTasks, getUserTasks, getPendingTasks, getToDoTasks}}>
             {children}
         </TaskContext.Provider>
     )

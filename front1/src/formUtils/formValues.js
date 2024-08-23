@@ -14,3 +14,10 @@ export const initialLoginUserValues = {
     name: '',
     password: ''
 }
+
+export const initialAddTaskValues = {
+    name: '',
+    description: '',
+    userId: '',
+    points: ''
+}

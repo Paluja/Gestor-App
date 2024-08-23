@@ -1,14 +1,19 @@
-import React from 'react';
-import { Field, ErrorMessage } from 'formik';
+import {useField} from 'formik';
 
-const Input = ({ label, name, type, placeholder }) => {
-    return (
-        <div>
-            <label htmlFor={name}>{label}</label>
-            <Field id={name} name={name} type={type} placeholder={placeholder} />
-            <ErrorMessage name={name} component="div" />
-        </div>
-    );
-};
+// eslint-disable-next-line react/prop-types
+function Input({label, ...props}) {
 
-export default Input;
+    const [field, meta] = useField(props);
+
+  return (
+    <>
+        <label>{label}</label>
+        <input {...props} {...field}
+        className={meta.touched && meta.error ? "input-error" : ""}
+        />
+        {meta.error && meta.touched && <div className='error'>{meta.error}</div>}
+    </>
+  )
+}
+
+export default Input

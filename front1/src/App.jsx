@@ -2,7 +2,7 @@
 import './App.css'
 import { Routes, Route } from "react-router-dom";
 import LoginAdmin from './views/admin/LoginAdmin'
-import Select from './components/Select'
+import SelectLogin from './components/SelectLogin'
 import RequireAdminAuth from './components/admin/RequireAdminAuth'
 import HomeAdmin from './views/admin/HomeAdmin'
 import RegisterAdmin from './views/admin/RegisterAdmin';
@@ -12,6 +12,9 @@ import LoginUser from './views/user/LoginUser';
 import RequireUserAuth from './components/user/RequireUserAuth';
 import HomeUser from './views/user/HomeUser';
 import LayoutUser from './components/user/LayoutUser';
+import AddTasks from './views/admin/AddTasks';
+import SettingsAdmin from './views/admin/SettingsAdmin';
+import SettingsUser from './views/user/SettingsUser';
 
 
 function App() {
@@ -20,7 +23,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Select/>}/>
+        <Route path="/" element={<SelectLogin/>}/>
         <Route path="admin/register" element={<RegisterAdmin/>}/>
         
         <Route path="/admin/login" element={<LoginAdmin/>}/>
@@ -28,6 +31,8 @@ function App() {
           <Route path='/admin' element={<LayoutAdmin/>}>
             <Route index element={<HomeAdmin/>}/>
             <Route path='add-member' element={<AddUser/>}/>
+            <Route path='add-tasks' element={<AddTasks/>}/>
+            <Route path='settings' element={<SettingsAdmin/>}/>
           </Route>
         </Route>
         
@@ -35,6 +40,7 @@ function App() {
         <Route element={<RequireUserAuth/>}>
           <Route path="/user" element={<LayoutUser/>}>
             <Route index element={<HomeUser/>}/>
+            <Route path='settings' element={<SettingsUser/>}/>
           </Route>
           {/* <Route path="/user" element={<LayoutUser/>}/> */}
         </Route>

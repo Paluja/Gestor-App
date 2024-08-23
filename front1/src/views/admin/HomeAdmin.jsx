@@ -1,26 +1,30 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/AuthAdminContext';
-
+import { useTaskContext } from '../../hooks/TasksContext';
 function HomeAdmin() {
     const { admin } = useAuth();
-    const [tasks, setTasks] = useState([]);
+    const {getToDoTasks,getCompletedTasks,getPendingTasks } = useTaskContext();
+    const [toDoTasks,setToDoTasks] = useState([])
+    const [completedTasks, setCompletedTasks] = useState([]);
+    const [pendingTasks, setPendingTasks] = useState([]);
+
+
+    
     // const [taskAdmin, setAdminTask] = useState([]);
 
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await fetch('http://localhost:3000/tasks/all');
-                if (response.ok) {
-                    const data = await response.json();
-                    setTasks(data);
-                }
+                setToDoTasks(await getToDoTasks());
+                setCompletedTasks(await getCompletedTasks());
+                setPendingTasks(await getPendingTasks());
             } catch (error) {
                 console.error('Error fetching tasks', error);
             }
         }
         fetchTasks();
-    }, []);
+    }, [getToDoTasks,getCompletedTasks,getPendingTasks]);
 
     console.log(admin);  
     return (
@@ -30,18 +34,41 @@ function HomeAdmin() {
                 <h2 key={admin.id}>Welcome {admin.name}</h2>
             ))}
             
-            <h2>Tasks</h2>
+            <div className="tasks-container">
+        <h2>Tasks</h2>
+        <div className="tasks-bx">
+          
+          <div className="tasks-todo">
+            <h3>ToDo</h3>
             <ul>
-                {tasks.map((task) => (
-                    <li key={task.id}>{task.name}</li>
-                ))}
+              {toDoTasks.length > 0 ? toDoTasks.map((task) => (
+                <li key={task.id}>
+                  {task.name}
+                </li>
+              )) : <h4>No hay tareas por hacer</h4>}
             </ul>
-            {/* <h2>Task added by {admin.name}</h2>
+          </div>
+       
+
+          <div className="tasks-pending">
+            <h3>Pending</h3>
             <ul>
-                {taskAdmin.map((task) => (
-                    <li key={task.id}>{task.name}</li>
-                ))}
-            </ul> */}
+              {pendingTasks.length > 0 ? pendingTasks.map((task) => (
+                <li key={task.id}>{task.name}</li>
+              )) : <h4>No hay tareas por verificar</h4>}
+            </ul>
+          </div>
+
+          <div className="tasks-completed">
+            <h3>Completed</h3>
+            <ul>
+              {completedTasks.length > 0 ? completedTasks.map((task) => (
+                <li key={task.id}>{task.name}</li>
+              )) : <h4>No hay tareas completadas</h4>}
+            </ul>
+          </div>
+        </div>
+        </div>
         </>
     )
 }
