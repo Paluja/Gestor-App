@@ -15,6 +15,7 @@ import LayoutUser from './components/user/LayoutUser';
 import AddTasks from './views/admin/AddTasks';
 import SettingsAdmin from './views/admin/SettingsAdmin';
 import SettingsUser from './views/user/SettingsUser';
+import AddAward from './views/admin/AddAward';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route index element={<HomeAdmin/>}/>
             <Route path='add-member' element={<AddUser/>}/>
             <Route path='add-tasks' element={<AddTasks/>}/>
+            <Route path='add-award' element={<AddAward/>}/>
             <Route path='settings' element={<SettingsAdmin/>}/>
           </Route>
         </Route>

@@ -21,3 +21,9 @@ export const initialAddTaskValues = {
     userId: '',
     points: ''
 }
+
+export const initialAddAwardValues = {
+    name: '',
+    description: '',
+    total_points: 0
+}

@@ -75,31 +75,31 @@ tasksDao.updateTask = async (taskData) => {
         let query = 'UPDATE tasks SET ';
         const params = [];
 
-        if (taskData.name) {
+        if (taskData.name !== null) {
             query += 'name = ?, ';
             params.push(taskData.name);
         }
-        if (taskData.description) {
+        if (taskData.description!== null) {
             query += 'description = ?, ';
             params.push(taskData.description);
         }
-        if (taskData.points) {
+        if (taskData.points!== null) {
             query += 'points = ?, ';
             params.push(taskData.points);
         }
-        if (taskData.user_id) {
+        if (taskData.user_id!== null) {
             query += 'user_id = ?, ';
             params.push(taskData.user_id);
         }
-        if (taskData.id_admin) {
+        if (taskData.id_admin!== null) {
             query += 'id_admin = ?, ';
             params.push(taskData.id_admin);
         }
-        if(taskData.verified){
+        if(taskData.verified!== null){
             query += 'verified = ?, ';
             params.push(taskData.verified);
         }
-        if(taskData.done){
+        if(taskData.done!== null){
             query += 'done = ?, ';
             params.push(taskData.done);
         }

@@ -12,7 +12,7 @@ function NavBarAdmin() {
           <Link to="/admin/tasks">Login</Link>
         </li>
         <li>
-          <Link to="/admin/awards">Add tasks</Link>
+          <Link to="/admin/add-award">Add awards</Link>
         </li>
         <li>
           <Link to="/admin/add-member">Add membrer</Link>

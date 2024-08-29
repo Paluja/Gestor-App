@@ -39,7 +39,8 @@ db.query = async (sqlQuery, params, type, conn) => {
           } else {
             return false
           }
-        // case 'replace':
+        case 'call':
+          return result
         case 'delete':
           if (result.affectedRows > 0) {
             return true

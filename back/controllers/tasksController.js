@@ -127,10 +127,9 @@ const updateTask = async (req, res) => {
             points: req.body.points ? req.body.points : null,
             user_id: req.body.user_id ? req.body.user_id : null,
             id_admin: req.body.id_admin ? req.body.id_admin : null,
-            verified: req.body.verified ? req.body.verified : null,
+            verified: req.body.verified >= 0 ? req.body.verified : null,
             done: req.body.done ? req.body.done : null
         }
-        console.log('task:', task);
         const result = await tasksData.updateTask(task);
         return res.status(200).send(result);
     } catch (error) {

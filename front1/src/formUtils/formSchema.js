@@ -23,3 +23,9 @@ export const addTaskSchema = yup.object().shape({
     userId: yup.number().required("User is required"),
     points: yup.number().required("Points is required")
 });
+
+export const addAwardSchema = yup.object().shape({
+    name: yup.string().min(3).required("Name is required"),
+    description: yup.string().min(3),
+    points: yup.number().required("Points is required")
+});
