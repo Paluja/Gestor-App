@@ -1,30 +1,37 @@
 import { Link } from 'react-router-dom'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHouse, faMedal, faUserPlus, faListCheck, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import '../../../public/css/navBarAdmin.css'
 
 function NavBarAdmin() {
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/admin">Home</Link>
-        </li>
-        <li>
-          <Link to="/admin/tasks">Login</Link>
-        </li>
-        <li>
-          <Link to="/admin/add-award">Add awards</Link>
-        </li>
-        <li>
-          <Link to="/admin/add-member">Add membrer</Link>
-        </li>
-        <li>
-          <Link to="/admin/add-tasks">Add Tasks</Link>
-        </li>
-        <li>
-          <Link to="/admin/settings">Settings</Link>
-        </li>
-      </ul>
-    </nav>    
+    <div className="navigation-bar">
+      <div className="nav-item">
+        <Link to="/admin" className="nav-link">
+          <FontAwesomeIcon className='icon-wrapper' icon={faHouse} />
+        </Link>
+      </div>
+      <div className="nav-item">
+        <Link to="/admin/add-award" className="nav-link">
+        <FontAwesomeIcon className='icon-wrapper' icon={faMedal} />
+        </Link>
+      </div>
+      <div className="nav-item">
+        <Link to="/admin/add-member" className="nav-link">
+        <FontAwesomeIcon className='icon-wrapper' icon={faUserPlus} />
+        </Link>
+      </div>
+      <div className="nav-item">
+        <Link to="/admin/add-tasks" className="nav-link">
+        <FontAwesomeIcon className='icon-wrapper' icon={faListCheck} />
+        </Link>
+      </div>
+      <div className="nav-item">
+        <Link to="/admin/settings" className="nav-link">
+        <FontAwesomeIcon className='icon-wrapper' icon={faArrowRightFromBracket} />
+        </Link>
+      </div>
+    </div>   
   )
 }
 

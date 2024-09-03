@@ -69,7 +69,7 @@ const addPoints = async (req, res) => {
 
 const achiveAwards = async (req, res) => {
     try {
-        const result = await awardData.achiveAwards(req.body.id_user, req.body.id_tasks);
+        const result = await awardData.achiveAwards(req.body.id_user, req.body.id_task);
         return res.status(200).send(result);
     } catch (error) {
         console.error('Error redeemAwards:', error);

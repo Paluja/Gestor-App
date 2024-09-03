@@ -1,8 +1,102 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  display: flex;
+  width: 412px;
+  flex-direction: column;
+  padding-bottom: 60px;
+  /* align-items: flex-start; */
+
+}
+
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.tasks-bx{
+  margin: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 90%;
+}
+
+ul{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+
+.tasks-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background-color: #372348; /* Fondo suave similar al de la imagen */
+
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 234px;
+  margin: 10px 0;
+}
+
+.task-content {
+  flex-grow: 1;
+  margin-right: 10px;
+  color: #fff;
+}
+
+.task-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.task-description {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #ffffffbe;
+}
+
+.btn_pts{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.btn_pts p{
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+
+
+.btn-task {
+  background-color: #7c4dff; /* Color de fondo del botón */
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-check:hover {
+  background-color: #5e35b1; /* Cambia el color en hover */
 }
 
 .logo {

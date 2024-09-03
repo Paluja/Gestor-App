@@ -1,5 +1,3 @@
-import { useState, useEffect, useReducer } from 'react'
-import { useAuthUser } from '../../hooks/UserContext'
 import { Formik } from 'formik';
 import { initialAddAwardValues } from '../../formUtils/formValues';
 import { addAwardSchema } from '../../formUtils/formSchema';
@@ -9,7 +7,9 @@ import { useAuth } from '../../hooks/AuthAdminContext';
 
 function AddAward() {
   const { admin } = useAuth();
+
   const handleSubmit = async (values, actions) => {
+    console.log(values);
     try {
       const response = await fetch('http://localhost:3000/awards/add-award', {
         method: 'POST',
@@ -42,15 +42,21 @@ function AddAward() {
         onSubmit={handleSubmit}
         validationSchema={addAwardSchema}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, values, errors }) => (
+          <>
           <Form>
             <Input label="Name" name="name" type="text" required/>
             <Input label="Description" name="description" type="text" required />
             <Input label="Total Points" name="total_points" type="number" required />
-            <button type="submit" disabled={isSubmitting}>
+            <button  disabled={isSubmitting} type="submit">
               Add Award
             </button>
+
           </Form>
+        <pre style={{ color: "black" }}>
+          {JSON.stringify({ values,  errors }, null, 1)}
+        </pre>
+        </>
         )}
       </Formik>
     </>

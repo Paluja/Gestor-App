@@ -1,0 +1,100 @@
+.navigation-bar {
+  align-items: flex-start;
+  background-color: #372348;
+  display: flex;
+  gap: 8px;
+  height: 60px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.navigation-bar .nav-item {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 4px;
+  justify-content: center;
+  padding: 12px 0px 16px;
+  position: relative;
+}
+
+.navigation-bar .icon-container {
+  align-items: center;
+  background-color: var(--m3-schemes-secondary-container);
+  border-radius: 16px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.navigation-bar .state-layer {
+  align-items: center;
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  padding: 4px 20px;
+  position: relative;
+  width: 64px;
+}
+
+.navigation-bar .icon-instance {
+  height: 24px !important;
+  position: relative !important;
+  width: 24px !important;
+}
+
+.navigation-bar .label-text {
+  align-self: stretch;
+  color: var(--m3-schemes-on-surface);
+  font-family: var(--m3-label-medium-prominent-font-family);
+  font-size: var(--m3-label-medium-prominent-font-size);
+  font-style: var(--m3-label-medium-prominent-font-style);
+  font-weight: var(--m3-label-medium-prominent-font-weight);
+  letter-spacing: var(--m3-label-medium-prominent-letter-spacing);
+  line-height: var(--m3-label-medium-prominent-line-height);
+  position: relative;
+  text-align: center;
+}
+
+.navigation-bar .state-layer-wrapper {
+  align-items: center;
+  border-radius: 16px;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: center;
+  position: relative;
+  width: 32px;
+}
+
+.navigation-bar .icon-wrapper {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  height: 25px;
+  justify-content: center;
+  margin-left: -16px;
+  margin-right: -16px;
+  padding: 4px 20px;
+  position: relative;
+  width: 64px;
+}
+
+.navigation-bar .text-wrapper {
+  align-self: stretch;
+  color: var(--m3-schemes-on-surface-variant);
+  font-family: var(--m3-label-medium-font-family);
+  font-size: var(--m3-label-medium-font-size);
+  font-style: var(--m3-label-medium-font-style);
+  font-weight: var(--m3-label-medium-font-weight);
+  letter-spacing: var(--m3-label-medium-letter-spacing);
+  line-height: var(--m3-label-medium-line-height);
+  position: relative;
+  text-align: center;
+}

@@ -1,4 +1,4 @@
-import  { createContext, useContext, useEffect } from 'react';
+import  { createContext, useContext } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -47,6 +47,8 @@ export const AuthProvider = ({ children }) => {
             if (response.status === 200) {
                 const data = await response.json();
                 setJWT(data.jwt);
+                await authAdmin();
+                setAuth(true);
                 console.log('Admin logged in successfully');
             } else {
                 console.error('Failed to login admin');
@@ -68,7 +70,7 @@ export const AuthProvider = ({ children }) => {
                 const adminData = await response.json();
                 setAdmin(adminData);
                 console.log('Admin authenticated successfully');
-                setAuth(true);
+               
             } else {
                 console.error('Failed to authenticate admin');
             }
@@ -119,11 +121,6 @@ export const AuthProvider = ({ children }) => {
             console.error('Error logging out admin:', error);
         }
     }
-    useEffect(() => {
-        if (jwtAdmin) {
-            authAdmin();
-        }
-    }, [jwtAdmin]);
 
     return (
         <AuthContext.Provider value={{ admin, registerAdmin, loginAdmin, logOutAdmin,jwtAdmin, auth, registerUser }}>

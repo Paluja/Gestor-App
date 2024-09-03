@@ -5,8 +5,8 @@ import { Outlet } from 'react-router-dom'
 function LayoutAdmin() {
   return (
     <>
-        <NavBarAdmin/>
         <Outlet/>
+        <NavBarAdmin/>
     </>
   )
 }

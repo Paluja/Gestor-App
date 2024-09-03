@@ -12,14 +12,14 @@ function LogOut() {
       if (jwtAdmin){
         try {
           await logOutAdmin();
-          navigate('/admin/login');
+          navigate('/');
         } catch (error) {
           console.error('Failed to logout admin',error);
         }
       } else if (jwtUser){
         try {
           await logOutUser();
-          navigate('/user/login');
+          navigate('/');
         } catch (error) {
           console.error('Failed to logout user',error);
         }
