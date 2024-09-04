@@ -1,8 +1,10 @@
 
 import { useEffect, useState } from 'react';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import { useAuth } from '../../hooks/AuthAdminContext';
 import { useTaskContext } from '../../hooks/TasksContext';
 import { useAuthUser } from '../../hooks/UserContext';
+import { Link } from 'react-router-dom';
 function HomeAdmin() {
     const { admin } = useAuth();
     const { getAllUsers } = useAuthUser();
@@ -135,9 +137,16 @@ function HomeAdmin() {
 
         <div className="awards-container">
           <h2>Premios por conseguir</h2>
-          <div className="awards-bx">
-            
+          <div className="awards-container">
+            <div className="awards-bx">
+              <div className="award-card">
+                <h4>Nombre del premio</h4>
+                <p>Descripcion del premio</p>
+                <ProgressBar now={60} />
+              </div>
+            </div>
           </div>
+          
         
         
         </div>
@@ -156,7 +165,9 @@ function HomeAdmin() {
                   </div>
                   <div className="btn_pts">
                     <p>{task.points} pts</p>
-                    <button className='btn-task'>edit</button>
+                    <Link to={'edit-task/'+task.id_tasks}>
+                      <button className='btn-task'>edit</button>
+                    </Link>
                   </div>
                 </li>
               )) : <h4>No hay tareas por hacer</h4>}

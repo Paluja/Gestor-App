@@ -115,6 +115,28 @@ export const TaskProvider = ({ children }) => {
         }
     }
 
+
+    const getTaskById = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:3000/tasks/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.status === 200) {
+                const data = await response.json();
+                console.log('Task retrieved successfully');
+                return(data);
+            } else {
+                console.error('Failed to retrieve task');
+            }
+        } catch (error) {
+            console.error('Error retrieving task:', error);
+        }
+    }
+
+
     useEffect(() => {
         if (tasks.length === 0) {
             getTasks();
@@ -122,7 +144,7 @@ export const TaskProvider = ({ children }) => {
     }, [tasks]);
 
     return (
-        <TaskContext.Provider value={{ tasks, getCompletedTasks, getTasks, getUserTasks, getPendingTasks, getToDoTasks}}>
+        <TaskContext.Provider value={{ tasks, getCompletedTasks, getTasks, getUserTasks, getPendingTasks, getToDoTasks, getTaskById}}>
             {children}
         </TaskContext.Provider>
     )

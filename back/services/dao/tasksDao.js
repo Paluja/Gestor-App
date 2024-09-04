@@ -174,4 +174,20 @@ tasksDao.getToDoTasks = async () => {
     }
 }
 
+
+tasksDao.getTaskById = async (id) => {
+    let conn = null;
+    try{
+        conn = await db.createConnection();
+        const result = await db.query( `SELECT * FROM tasks WHERE id_tasks = ?;`,[id],'select',conn);
+        return result;
+    } catch (error) {
+        console.error("Error getByTaskId: ", error);
+        throw new Error(error.message);
+    } finally{
+        conn && conn.end();
+    }
+}
+
+
 module.exports = tasksDao;

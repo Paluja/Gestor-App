@@ -73,6 +73,18 @@ const deleteTask = async (req, res) => {
     }
 }
 
+const getTaskById = async (req, res) => {
+    try {
+        const result = await tasksData.getTaskById(req.params.id);
+        return res.status(200).send(result);
+    }
+    catch (error) {
+        console.error('Error getTaskById:', error);
+        return res.status(500).send('Internal server error');
+    }
+}
+
+
 const getAllTasks = async (req, res) => {
     try {
         const result = await tasksData.getAllTasks();
@@ -139,4 +151,4 @@ const updateTask = async (req, res) => {
 }
 
 module.exports = {getTaskByUserId, getTaskByAdminId, insertTask, deleteTask, getAllTasks, 
-                getCompletedTasks, getPendingTasks, getToDoTasks, updateTask};
+                getCompletedTasks, getPendingTasks, getToDoTasks, updateTask, getTaskById};
