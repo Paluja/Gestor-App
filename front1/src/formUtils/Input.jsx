@@ -7,11 +7,13 @@ function Input({label, ...props}) {
 
   return (
     <>
+        <div className="input-container">
         <label>{label}</label>
         <input {...props} {...field}
         className={meta.touched && meta.error ? "input-error" : ""}
         />
-        {meta.error && meta.touched && <div className='error'>{meta.error}</div>}
+        </div>
+        {/* {meta.error && meta.touched && <div className='error'>{meta.error}</div>} */}
     </>
   )
 }

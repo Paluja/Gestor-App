@@ -1,0 +1,56 @@
+.awards-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.awards-bx{
+  width: 90%;
+}
+
+.awards-bx{
+  width: 70%;
+}
+
+.awards-card{
+  margin-top: 20px;
+}
+
+.award-title{
+  margin: 0px;
+  width: fit-content;
+  text-transform: capitalize;
+}
+
+.award-points{
+  float: right;
+  font-size: 12px;
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+
+
+.progress-bar-container {
+    width: 100%;
+    height: 15px;
+    background-color: #372348; /* Color de fondo de la barra */
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px 0;
+
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: #7c4dff; /* Color de la barra de progreso */
+    text-align: center;
+    line-height: 30px; /* Centra el texto verticalmente */
+    color: white;
+    font-weight: bold;
+    
+    transition: width 0.3s ease-in-out; /* Añade una transición suave */
+  }
+  

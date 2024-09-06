@@ -1,6 +1,7 @@
 import  { createContext, useContext } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const AuthContext = createContext({});
 
@@ -12,7 +13,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
     const navigate  = useNavigate();
     const [admin, setAdmin] = useState(null);
-    const [auth, setAuth] = useState(false);
+    const [auth, setAuth] = useState(window.localStorage.getItem('auth') || null);
     const [jwtAdmin,setJWT] = useState(null);
 
     const registerAdmin = async (name, password, email) =>{
@@ -47,8 +48,7 @@ export const AuthProvider = ({ children }) => {
             if (response.status === 200) {
                 const data = await response.json();
                 setJWT(data.jwt);
-                await authAdmin();
-                setAuth(true);
+                localStorage.setItem('jwtToken', data.jwt);
                 console.log('Admin logged in successfully');
             } else {
                 console.error('Failed to login admin');
@@ -69,6 +69,7 @@ export const AuthProvider = ({ children }) => {
             if (response.status === 200) {
                 const adminData = await response.json();
                 setAdmin(adminData);
+                setAuth(true);
                 console.log('Admin authenticated successfully');
                
             } else {
@@ -113,6 +114,7 @@ export const AuthProvider = ({ children }) => {
                 setJWT(null);
                 setAdmin(null);
                 setAuth(false);
+                localStorage.removeItem('jwtToken');
                 console.log('Admin logged out successfully');
             } else {
                 console.error('Failed to logout admin');
@@ -121,7 +123,18 @@ export const AuthProvider = ({ children }) => {
             console.error('Error logging out admin:', error);
         }
     }
+    useEffect(() => {
+        const storedToken = localStorage.getItem('jwtToken');
+        if (storedToken) {
+            setJWT(storedToken);
+        }
+    }, []);
 
+    useEffect(() => {
+        if (jwtAdmin) {
+            authAdmin();
+        }
+    }, [jwtAdmin]);
     return (
         <AuthContext.Provider value={{ admin, registerAdmin, loginAdmin, logOutAdmin,jwtAdmin, auth, registerUser }}>
             {children}

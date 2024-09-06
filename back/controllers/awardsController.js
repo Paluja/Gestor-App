@@ -1,3 +1,4 @@
+const { jwtVerify } = require('jose');
 const awardData = require('../services/dao/awardsDao');
  
 
@@ -42,12 +43,19 @@ const getUnachivedAwards = async (req, res) => {
 }
 
 const insertAward = async (req, res) => {
+    const token = req.headers.authorization;
+    if (!token) return res.status(403).send('Unauthorized');
     try {
+        const encoder = new TextEncoder();
+        const { payload } = await jwtVerify(
+            token,
+            encoder.encode(process.env.JWT_SECRET)
+        );
         const award = {
             name: req.body.name,
             description: req.body.description,
             total_points: req.body.total_points,
-            id_admin: req.body.id_admin
+            id_admin: payload.id_admin
         }
         await awardData.insertAward(award);
         return res.status(200).send('Award added');
@@ -77,16 +85,7 @@ const achiveAwards = async (req, res) => {
     }
 }
 
-const revokeAwards = async (req, res) => {
-    try {
-        const result = await awardData.revokeAwards(req.body.id_user, req.body.id_tasks);
-        return res.status(200).send(result);
-    } catch (error) {
-        console.error('Error revokeAwards:', error);
-        return res.status(500).send('Internal server error');
-    }
-}
 
 
 module.exports = { getAllAwards, getAwardById, getAchivedAwards, getUnachivedAwards, 
-                insertAward, addPoints, achiveAwards, revokeAwards };
+                insertAward, addPoints, achiveAwards };

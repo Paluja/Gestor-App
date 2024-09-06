@@ -5,27 +5,21 @@ import { useNavigate } from 'react-router-dom';
 
 function LogOut() {
     const navigate = useNavigate();
+
     const { jwtAdmin, logOutAdmin } = useAuth();
-    const { jwtUser, logOutUser } = useAuthUser();
+    // const { jwtUser, logOutUser } = useAuthUser();
+
+    console.log('JWTAdmin', jwtAdmin);
+    // console.log('JWTUser', jwtUser);
 
     const handleLogOut = async () => {
-      if (jwtAdmin){
+      
         try {
           await logOutAdmin();
           navigate('/');
         } catch (error) {
           console.error('Failed to logout admin',error);
         }
-      } else if (jwtUser){
-        try {
-          await logOutUser();
-          navigate('/');
-        } catch (error) {
-          console.error('Failed to logout user',error);
-        }
-      } else {
-        console.error('No user or admin logged in');
-      }
     }
 
     return (

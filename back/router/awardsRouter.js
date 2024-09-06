@@ -10,6 +10,6 @@ awardsRouter.get('/unachived', getUnachivedAwards);
 awardsRouter.post('/add-award', insertAward);
 awardsRouter.put('/add-points', addPoints);
 awardsRouter.put('/achive-awards', achiveAwards);
-awardsRouter.put('/revoke-awards', revokeAwards);
+
 
 module.exports = awardsRouter;

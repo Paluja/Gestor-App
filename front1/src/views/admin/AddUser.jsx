@@ -26,7 +26,7 @@ function AddUser() {
     }, []);
    
     
-
+    console.log(users);
     const onSubmit = async (values, actions) => {
         await registerUser(values.name, values.password);
         actions.resetForm();
@@ -37,11 +37,16 @@ function AddUser() {
       <>
         <div className="members-container">
           <h1>Members</h1>
-          <ul>
-            {users.map((user) => (
-              <li key={user.id}>{user.name}</li>
-            ))}
-          </ul>
+          <div className="members-layout">
+            <ul>
+              {users.map((user) => (
+                <li className='member-card' key={user.id}>
+                  <h3 className='name'>{user.name}</h3>
+                  <p className='points'>Puntos totales: {user.points}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
 

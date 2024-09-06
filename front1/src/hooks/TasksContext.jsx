@@ -1,5 +1,4 @@
-import  { createContext, useContext, useEffect } from 'react';
-import { useState } from 'react';
+import  { createContext, useContext} from 'react';
 // import { useNavigate } from 'react-router-dom';
 
 const TaskContext = createContext({});
@@ -10,10 +9,7 @@ export const useTaskContext = () => {
 
 
 export const TaskProvider = ({ children }) => {
-    const [tasks, setTasks] = useState([]);
     // const [adminTasks, setAdminTasks] = useState([]);
-
-
 
     const getTasks = async () => {
         try {
@@ -137,14 +133,8 @@ export const TaskProvider = ({ children }) => {
     }
 
 
-    useEffect(() => {
-        if (tasks.length === 0) {
-            getTasks();
-        }
-    }, [tasks]);
-
     return (
-        <TaskContext.Provider value={{ tasks, getCompletedTasks, getTasks, getUserTasks, getPendingTasks, getToDoTasks, getTaskById}}>
+        <TaskContext.Provider value={{ getCompletedTasks, getTasks, getUserTasks, getPendingTasks, getToDoTasks, getTaskById}}>
             {children}
         </TaskContext.Provider>
     )

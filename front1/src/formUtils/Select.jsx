@@ -5,13 +5,15 @@ function Select({label, children, ...props}) {
     const [field, meta] = useField(props);
   return (
    <>
+   <div className="select-container">
    <label>{label}</label>
    <select {...field} {...props}
      className={meta.touched && meta.error ? "input-error" : ""}
    >
     {children}
    </select>
-   {meta.touched && meta.error && <div className="error">{meta.error}</div>}
+   </div>
+   {/* {meta.touched && meta.error && <div className="error">{meta.error}</div>} */}
    </>
   )
 }

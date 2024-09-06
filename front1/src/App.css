@@ -8,6 +8,7 @@
 }
 
 .tasks-container {
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,6 +23,16 @@
   flex-direction: column;
   width: 90%;
 }
+
+.tasks-pending{
+  margin-top: 30px;
+}
+
+.tasks-completed{
+  margin-top: 30px;
+}
+
+
 
 ul{
   display: flex;
@@ -95,9 +106,59 @@ ul{
   transition: background-color 0.3s;
 }
 
+.members-layout ul{
+  width: 90%;
+
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 0 auto;
+} 
+
+.member-card{
+    background-color: #372348;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
 .btn-check:hover {
   background-color: #5e35b1; /* Cambia el color en hover */
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+::placeholder {
+  color: #ffffff63;
+}
+
+input{
+  background-color: #372348;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ffffff63;
+  margin: 10px;
+}
+
+.input-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+
+
+
+
 
 .logo {
   height: 6em;

@@ -60,7 +60,7 @@ function AddTasks() {
             {({ isSubmitting }) => (
                 <Form>
                     
-                    <Input label="Task" type="text" id="name" name="name" required />
+                    <Input label="Tarea" placeholder="Nombre de la tarea" type="text" id="name" name="name" required />
                     
                     <Input label="Description"  type="text" id="description" name="description" required />
                     
@@ -70,7 +70,7 @@ function AddTasks() {
                             <option key={user.id} value={user.id_users}>{user.name}</option>
                         ))}
                     </Select>
-                    <Input label="points" type="number" id="points" name="points" required />
+                    <Input label="puntos" type="number" id="points" name="points" required />
                     <button disabled={isSubmitting} type="submit">Add Task</button>
                 </Form>
             )}

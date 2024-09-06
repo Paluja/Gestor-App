@@ -1,21 +1,25 @@
 import { Link } from "react-router-dom"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHouse, faMedal, faUserPlus, faListCheck, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 
 function NavBarUser() {
   return (
-    <nav>
-        <ul>
-            <li>
-                <Link to="/user/shop">Home</Link>
-            </li>
-            <li>
-                <Link to="/user">Home</Link>
-            </li>
-            <li>
-                <Link to="/user/settings">Settings</Link>
-            </li>
-        </ul>
-    </nav>
+    <div className="navigation-bar">
+      
+      <div className="nav-item">
+        <Link to="/user">
+            <FontAwesomeIcon className='icon-wrapper' icon={faHouse} />
+        </Link>
+      </div>
+      <div className="nav-item">
+      <Link to="/user/settings">
+        <FontAwesomeIcon className='icon-wrapper' icon={faArrowRightFromBracket} />
+    </Link>
+      </div>
+    </div> 
   )
 }
 
 export default NavBarUser
+                
+

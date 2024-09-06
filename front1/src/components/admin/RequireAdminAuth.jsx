@@ -1,11 +1,13 @@
 import { Outlet } from "react-router-dom";
-import { useAuth } from '../../hooks/AuthAdminContext'
+// import { useAuth } from '../../hooks/AuthAdminContext'
 
 
 function RequireAdminAuth() {
-    const { auth } = useAuth();
+    // const { auth } = useAuth();
+    const isAuntenticated = window.localStorage.getItem('auth');
+    console.log('AuthAdmin', isAuntenticated);
     return (
-      auth ? <Outlet /> : <h2>Malas credeenciales</h2>
+      isAuntenticated ? <Outlet /> : <h2>Malas credeenciales</h2>
   )
 }
 

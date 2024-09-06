@@ -106,18 +106,6 @@ awardsDao.achiveAwards = async (id_user,id_task) => {
     }
 }
 
-awardsDao.revokeAwards = async (id_user,id_task) => {
-    let conn = null;
-    try {
-        conn = await db.createConnection();
-        const result = await db.query(`Call ReverseUserPointsAndAwards(?,?); `, [id_user,id_task], 'call', conn);
-        return result;
-    } catch (error) {
-        console.error("Error revokeAwards: ", error);
-        throw new Error(error.message);
-    } finally {
-        conn && conn.end();
-    }
-}
+
 
 module.exports = awardsDao;

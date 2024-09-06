@@ -27,8 +27,8 @@ export const AuthUserProvider = ({ children }) => {
             if (response.status === 200) {
                 const data = await response.json();
                 setJWT(data.jwt);
+                localStorage.setItem('jwtToken', data.jwt); // Guardar el token en localStorage
                 console.log('User logged in successfully');
-                // Manejar el éxito del login, por ejemplo, guardar el JWT en el estado
             } else {
                 console.error('Failed to login user');
             }
@@ -36,6 +36,7 @@ export const AuthUserProvider = ({ children }) => {
             console.error('Error logging in user:', error);
         }
     }
+    
 
     const authUser = async () => {
         try {
@@ -89,6 +90,7 @@ export const AuthUserProvider = ({ children }) => {
                 setJWT(null);
                 setUser(null);
                 setAuth(false);
+                localStorage.removeItem('jwtToken'); // Eliminar el token de localStorage
                 console.log('User logged out successfully');
             } else {
                 console.error('Failed to logout user');
@@ -99,10 +101,18 @@ export const AuthUserProvider = ({ children }) => {
     }
 
     useEffect(() => {
+        const storedToken = localStorage.getItem('jwtToken');
+        if (storedToken) {
+            setJWT(storedToken);
+        }
+    }, []);
+    
+    useEffect(() => {
         if (jwtUser) {
             authUser();
         }
     }, [jwtUser]);
+    
 
     return (
         <AuthUserContext.Provider value={{ user, auth, loginUser, jwtUser,authUser, getAllUsers, logOutUser }}>
