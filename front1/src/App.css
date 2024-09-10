@@ -64,6 +64,9 @@ ul{
   flex-grow: 1;
   margin-right: 10px;
   color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .task-title {
@@ -77,6 +80,9 @@ ul{
   margin: 5px 0 0;
   font-size: 14px;
   color: #ffffffbe;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .btn_pts{
@@ -96,7 +102,7 @@ ul{
 
 
 .btn-task {
-  background-color: #7c4dff; /* Color de fondo del botón */
+  background-color: #7c4dff;
   color: #fff;
   border: none;
   border-radius: 20px;
@@ -108,23 +114,64 @@ ul{
 
 .members-layout ul{
   width: 90%;
-
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
+  
   gap: 15px;
   margin: 0 auto;
-} 
-
-.member-card{
-    background-color: #372348;
-    padding: 10px;
-    border-radius: 10px;
 }
 
+.member-card {
+  background-color: #372348;
+  border-radius: 10px;
+  display: flex;        
+  flex-direction: column; 
+  justify-content: space-between;
+  max-height: 148px;
+}
+
+.member-card .content {
+  padding: 10px;
+}
+
+.members-container .title, .title-addMember{
+  display: flex;
+  justify-content: center;
+}
+
+.form-addMember{
+  margin-bottom: 50px;
+}
+
+.title-formAward{
+  display: flex;
+  justify-content: center;
+}
+
+.principalTitle{
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  
+}
+
+.principalTitle h1{
+  color: #fff;
+  font-size: 35px;
+}
+.principalTitle span{
+  color: #fff;
+  font-size: 20px;
+  text-transform: capitalize;
+  font-weight: bold;
+}
 
 .btn-check:hover {
-  background-color: #5e35b1; /* Cambia el color en hover */
+  background-color: #5e35b1;
 }
 
 form {
@@ -154,10 +201,6 @@ input{
   justify-content: center;
   align-items: flex-start;
 }
-
-
-
-
 
 
 .logo {

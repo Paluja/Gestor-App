@@ -68,6 +68,7 @@ awardsDao.insertAward = async (awardData) => {
             id_admin: awardData.id_admin
 
         }
+        
         const result = await db.query(`INSERT INTO awards SET ?`, awardObj, 'insert', conn);
         return result;
     } catch (error) {

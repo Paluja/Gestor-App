@@ -22,12 +22,12 @@ function RegisterAdmin() {
             >
             {({isSubmitting}) => (
                 <Form>
-                    <Input label="name" name='name' type='text' placeholder='Name' required/>
-                    <Input label="email" name='email' type='email' placeholder='Email' required />
-                    <Input label="password" name='password' type='password' placeholder='Password' required/>
+                    <Input label="Nombre" name='name' type='text' placeholder='Nombre' required/>
+                    <Input label="Email" name='email' type='email' placeholder='Email' required />
+                    <Input label="Contraseña" name='password' type='password' placeholder='Contraseña' required/>
                     {/* anyadir un label con las pautas para la contrasenya y debajo ponerle el confirm password */}
-                    <Input label="acceptedTc" name='acceptedTc' type='checkbox' placeholder='Accepted Terms and Conditions' required/>
-                    <button disabled={isSubmitting} type='submit'>Register</button>
+                    
+                    <button className='btn-task' disabled={isSubmitting} type='submit'>Register</button>
                     {error && <p>The password must have 8 chars, 1 mayus, 1 number and 1 specia character</p>}
                 </Form>
             )}

@@ -49,6 +49,7 @@ export const AuthProvider = ({ children }) => {
                 const data = await response.json();
                 setJWT(data.jwt);
                 localStorage.setItem('jwtToken', data.jwt);
+                console.log(data.jwt);
                 console.log('Admin logged in successfully');
             } else {
                 console.error('Failed to login admin');
@@ -127,12 +128,16 @@ export const AuthProvider = ({ children }) => {
         const storedToken = localStorage.getItem('jwtToken');
         if (storedToken) {
             setJWT(storedToken);
+        } else {
+            setAuth(false); // Asegura que si no hay token, auth sea false
         }
     }, []);
-
+    
     useEffect(() => {
         if (jwtAdmin) {
             authAdmin();
+        } else {
+            setAuth(false); // Establece auth como false si no hay jwtAdmin
         }
     }, [jwtAdmin]);
     return (

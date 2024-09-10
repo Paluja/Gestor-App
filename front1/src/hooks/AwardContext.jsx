@@ -21,7 +21,6 @@ export const AwardProvider = ({ children }) => {
             });
             if (response.status === 200) {
                 const data = await response.json();
-                console.log('data:', data);
                 console.log('Awards retrieved successfully');
                 return(data);
             } else {
@@ -31,8 +30,30 @@ export const AwardProvider = ({ children }) => {
             console.error('Error retrieving awards:', error);
         }
     }
+
+    const getAchivedAwards = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/awards/achived', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.status === 200) {
+                const data = await response.json();
+                console.log('data:', data);
+                console.log('Awards retrieved successfully');
+                return(data);
+            } else {
+                console.error('Failed to retrieve awards');
+            }
+        } catch (error) {
+            console.error('Error retrieving awards:', error);
+        }
+    };
+
     return (
-        <AwardContext.Provider value={{ getUnachivedAwards }}>
+        <AwardContext.Provider value={{ getUnachivedAwards, getAchivedAwards }}>
             {children}
         </AwardContext.Provider>
     );

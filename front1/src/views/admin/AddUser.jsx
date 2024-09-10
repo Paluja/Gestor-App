@@ -36,29 +36,33 @@ function AddUser() {
     return (
       <>
         <div className="members-container">
-          <h1>Members</h1>
+          
+          <h1 className='title'>Miembros</h1>
+          
           <div className="members-layout">
             <ul>
               {users.map((user) => (
                 <li className='member-card' key={user.id}>
-                  <h3 className='name'>{user.name}</h3>
-                  <p className='points'>Puntos totales: {user.points}</p>
+                  <div className="content">
+                    <h3 className='name'>{user.name}</h3>
+                    <p className='points'>Puntos totales: {user.points}</p>
+                  </div>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-
+        <h2 className='title-addMember'>Añadir miembro</h2>
         <Formik
           initialValues={initialRegisterValues}
           onSubmit={onSubmit}
         >
           {({ isSubmitting }) => (
-            <Form>
-              <Input label="name" name='name' type='text' placeholder='Name' required/>
-              <Input label="password" name='password' type='password' placeholder='Password' required/>
-              <button disabled={isSubmitting} type='submit'>Add Member</button>
+            <Form className='form-addMember'>
+              <Input label="Nombre" name='name' type='text' placeholder='Name' required/>
+              <Input label="Contraseña" name='password' type='password' placeholder='Password' required/>
+              <button disabled={isSubmitting} type='submit'>Añadir</button>
             </Form>
           )}
         </Formik>

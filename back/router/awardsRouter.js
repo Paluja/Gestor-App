@@ -1,7 +1,7 @@
 const express = require('express');
 const awardsRouter = express.Router();
 const { getAllAwards, getAwardById, getAchivedAwards, 
-    getUnachivedAwards, insertAward, addPoints, achiveAwards, revokeAwards } = require('../controllers/awardsController');
+    getUnachivedAwards, insertAward, addPoints, achiveAwards } = require('../controllers/awardsController');
 
 awardsRouter.get('/all', getAllAwards);
 awardsRouter.get('/award/:id', getAwardById);

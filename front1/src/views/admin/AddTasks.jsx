@@ -71,7 +71,7 @@ function AddTasks() {
                         ))}
                     </Select>
                     <Input label="puntos" type="number" id="points" name="points" required />
-                    <button disabled={isSubmitting} type="submit">Add Task</button>
+                    <button className='btn-task' disabled={isSubmitting} type="submit">Añadir</button>
                 </Form>
             )}
     </Formik>

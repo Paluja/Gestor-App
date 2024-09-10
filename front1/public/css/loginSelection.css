@@ -1,0 +1,27 @@
+.loginSelection-container{
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.btn-login{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.btn-login button{
+    background-color: #5e35b1;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register-container{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}

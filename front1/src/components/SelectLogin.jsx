@@ -17,10 +17,12 @@ function SelectLogin() {
 
     return (
         <>
-            <div>
-                <button className='btn-admin' onClick={handleAdminLogin}>Login as Admin</button>
-                <button className='btn-user' onClick={handleUserLogin}>Login as User</button>
-                <p onClick={handleRegisterAdmin}>Register as new Admin</p>
+            <div className='loginSelection-container'>
+                <div className="btn-login">
+                    <button className='btn-admin' onClick={handleAdminLogin}>Login as Admin</button>
+                    <button className='btn-user' onClick={handleUserLogin}>Login as User</button>
+                </div>
+                <p className='register-container' onClick={handleRegisterAdmin}>Register as new Admin</p>
             </div>
         </>
     );

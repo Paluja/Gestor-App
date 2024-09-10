@@ -1,6 +1,6 @@
 const tasksData = require('../services/dao/tasksDao');
 const { SignJWT, jwtVerify } = require('jose');
-const md5 = require('md5');
+const { getIo } = require('../socket'); 
 
 
 
@@ -39,29 +39,37 @@ const getTaskByAdminId = async (req, res) => {
 }
 
 const insertTask = async (req, res) => {
-    
     const token = req.headers.authorization;
+    const { name, description, user_id, points } = req.body;
     if (!token) return res.sendStatus(401);
+
     try {
         const encoder = new TextEncoder();
-        const { payload }  = await jwtVerify(
+        const { payload } = await jwtVerify(
             token,
             encoder.encode(process.env.JWT_SECRET)
         );
+        console.log('payload:', payload);
         const task = {
-            name: req.body.name,
-            description: req.body.description,
-            points: req.body.points,
-            user_id: req.body.user_id,
+            name: name,
+            description: description,
+            points: points,
+            user_id: user_id,
             admin_id: payload.id_admin
-        }
+        };
+
         const result = await tasksData.insertTask(task);
+
+        // Asegúrate de que `io` esté definido y disponible
+        
+        const io = getIo();
+        io.emit('taskAdded', { name, description, user_id, points });
         return res.sendStatus(200);
     } catch (error) {
         console.error('Error insertTask:', error);
         return res.status(500).send('Internal server error');
     }
-}
+};
 
 const deleteTask = async (req, res) => {
     try {

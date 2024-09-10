@@ -51,6 +51,7 @@ const insertAward = async (req, res) => {
             token,
             encoder.encode(process.env.JWT_SECRET)
         );
+        console.log('payload:', payload);
         const award = {
             name: req.body.name,
             description: req.body.description,
