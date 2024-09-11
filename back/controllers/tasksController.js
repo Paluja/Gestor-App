@@ -60,7 +60,7 @@ const insertTask = async (req, res) => {
 
         const result = await tasksData.insertTask(task);
 
-        // Asegúrate de que `io` esté definido y disponible
+        console.log('result:', result);
         
         const io = getIo();
         io.emit('taskAdded', { name, description, user_id, points });

@@ -22,9 +22,9 @@ function LoginUser() {
       >
         {({isSubmitting}) => (
           <Form>
-            <Input label="name" name='name' type='text' placeholder='Name' />
-            <Input label="password" name='password' type='text' placeholder='Password' />
-            <button disabled={isSubmitting} type='submit'>Login</button>
+            <Input label="Nombre" name='name' type='text' placeholder='Nombre' />
+            <Input label="Contraseña" name='password' type='password' placeholder='Contraseña' required/>
+            <button className="btn-task" disabled={isSubmitting} type='submit'>Login</button>
           </Form>
         )}
       </Formik>

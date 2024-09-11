@@ -202,6 +202,26 @@ input{
   align-items: flex-start;
 }
 
+.btn-logOut{
+  margin: 0 auto;
+  background-color: rgba(255, 0, 0, 0.678);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 50%;
+  transition: background-color 0.3s;
+}
+
+
+select{
+  background-color: #372348;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ffffff63;
+  margin: 10px;
+}
 
 .logo {
   height: 6em;

@@ -52,6 +52,8 @@ function AddTasks() {
     }
   
     return (
+    <>
+    <h2 className='title-formAward'>Añadir nueva tarea</h2>
     <Formik
         initialValues={initialAddTaskValues}
         onSubmit={handleSubmit}
@@ -62,19 +64,20 @@ function AddTasks() {
                     
                     <Input label="Tarea" placeholder="Nombre de la tarea" type="text" id="name" name="name" required />
                     
-                    <Input label="Description"  type="text" id="description" name="description" required />
+                    <Input label="Descripción" placeholder='Descripción de la tarea'  type="text" id="description" name="description" required />
                     
-                    <Select label="Member" id="userId" name="userId" required>
-                        <option value="">Select a user</option>
+                    <Select label="Selecciona un miembro" id="userId" name="userId" required>
+                        <option value="">Miembros</option>
                         {users.map((user) => (
                             <option key={user.id} value={user.id_users}>{user.name}</option>
                         ))}
                     </Select>
-                    <Input label="puntos" type="number" id="points" name="points" required />
+                    <Input label="Puntos" type="number" id="points" name="points" placeholder='Puntos de la tarea' required />
                     <button className='btn-task' disabled={isSubmitting} type="submit">Añadir</button>
                 </Form>
             )}
     </Formik>
+    </>
   )
 }
 

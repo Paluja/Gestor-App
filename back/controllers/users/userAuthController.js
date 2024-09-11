@@ -12,7 +12,6 @@ const userToken = async (req, res) => {
 
     try {
         const { id_users} = await userData.login(name, password);
-        // console.log('name:', name, 'password:', password);
         if (!id_users) {
             return res.status(401).send('Invalid credentials');
         }

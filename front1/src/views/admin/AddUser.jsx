@@ -62,7 +62,7 @@ function AddUser() {
             <Form className='form-addMember'>
               <Input label="Nombre" name='name' type='text' placeholder='Name' required/>
               <Input label="Contraseña" name='password' type='password' placeholder='Password' required/>
-              <button disabled={isSubmitting} type='submit'>Añadir</button>
+              <button className='btn-task' disabled={isSubmitting} type='submit'>Añadir</button>
             </Form>
           )}
         </Formik>

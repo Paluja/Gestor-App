@@ -11,7 +11,8 @@ const socket = io('http://localhost:3000');
 function HomeUser() {
   const { user } = useAuthUser();
   const { getUserTasks } = useTaskContext();
-  const { getUnachivedAwards } = useAwardContext();
+  const { getUnachivedAwards, getAchivedAwards } = useAwardContext();
+  const [unAwards, setUnAwards] = useState([]);
   const [toDoTasks, setToDoTasks] = useState([]);
   const [pendingTasks, setPendingTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
@@ -28,12 +29,36 @@ function HomeUser() {
     }
   };
 
+  const fetchAwards = async () => {
+    try {
+      const unachived = await getUnachivedAwards();
+      const achived = await getAchivedAwards();
+      setUnAwards(unachived);
+      setAwards(achived);
+    } catch (error) {
+      console.error('Error fetching awards', error);
+    }
+  };
+
+  useEffect(() => {
+    // Configura los listeners de socket solo una vez
+    socket.on('updateTask', async () => {
+      await fetchTasks();
+      await fetchAwards();
+    });
+
+    // Limpieza de los listeners al desmontar el componente
+    return () => {
+      socket.off('updateTask');
+    };
+  }, []);
+
   useEffect(() => {
     const socket = io('http://localhost:3000');
     // Escucha el evento 'taskAdded' para actualizar las tareas en tiempo real
-    socket.on('taskAdded', (task) => {
+    socket.on('taskAdded', () => {
       // Actualiza el estado para reflejar la nueva tarea añadida
-      setToDoTasks(prevTasks => [...prevTasks, task]);
+      fetchTasks();
     });
 
     // Limpia la conexión cuando el componente se desmonte
@@ -51,8 +76,8 @@ function HomeUser() {
 
     // Escucha el evento 'awardAdded' para actualizar los premios en tiempo real
     socket.on('awardAdded', (newAward) => {
-      // Actualiza el estado para reflejar el nuevo premio añadido
-      setAwards(prevAwards => [...prevAwards, newAward]);
+      
+      setUnAwards(prevAwards => [...prevAwards, newAward]);
     });
 
     // Limpia la conexión cuando el componente se desmonte
@@ -96,13 +121,26 @@ function HomeUser() {
     const fetchAwards = async () => {
       try {
         const data = await getUnachivedAwards();
-        setAwards(data);
+        setUnAwards(data);
       } catch (error) {
         console.error('Error fetching awards', error);
       }
     };
     fetchAwards();
   }, []);
+
+  useEffect(() => {
+    const fetchAwards = async () => {
+      try {
+        const data = await getAchivedAwards();
+        setAwards(data);
+      } catch (error) {
+        console.error('Error fetching awards', error);
+      }
+    };
+    fetchAwards();
+  }, [getAchivedAwards]);
+
 
   useEffect(() => {
     const socket = io('http://localhost:3000');
@@ -121,7 +159,9 @@ function HomeUser() {
     return () => {
         socket.disconnect();
     };
-}, []);
+  }, [getUnachivedAwards, getUserTasks, user]);
+
+  console.log(toDoTasks);
 
   return (
     <>
@@ -135,8 +175,8 @@ function HomeUser() {
       <div className="awards-container">
         <h2>Premios por conseguir</h2>
         <div className="awards-bx">
-          {awards.length > 0 ? (
-            awards.map((award) => (
+          {unAwards.length > 0 ? (
+            unAwards.map((award) => (
               <div key={award.id_award} className="awards-card">
                 <div className="award-content">
                   <h4 className="award-title">{award.name}</h4>
@@ -161,6 +201,26 @@ function HomeUser() {
         </div>
       </div>
 
+      <div className="awards-container">
+          <h2>Premios conseguidos</h2>
+          <div className="awards-bx">              
+              {awards.length > 0 ? awards.slice(-5).reverse().map((award) => (
+                <div key={award.id_award} className='awards-card'>
+                  <div className="award-content">
+                    <h4 className='award-title'>{award.name}</h4>
+                    <p className='award-points'>{award.total_points } / {award.total_points}</p>
+                  </div>
+                  <div className="progressBar-bx">
+                    <ProgressBar progress={
+                      (award.points_earned / award.total_points * 100) ? Math.floor(award.points_earned / award.total_points * 100) : 0
+                      } />  
+                  </div>   
+                </div>
+              )) : <h4>No hay premios disponibles</h4>}
+
+          </div>
+        </div>
+
       <div className="tasks-container">
         <h2>Tareas</h2>
         <div className="tasks-bx">
@@ -176,6 +236,7 @@ function HomeUser() {
                     </div>
                     <div className="btn_pts">
                       <p>{task.points} pts</p>
+                      
                       <button className='btn-task' onClick={() => changeTaskStatusDone(task.id_tasks)}>Done</button >
                     </div>
                   </li>
@@ -211,7 +272,7 @@ function HomeUser() {
             <h4>Completadas</h4>
             <ul>
               {completedTasks.length > 0 ? (
-                completedTasks.slice(0, 5).map((task) => (
+                completedTasks.slice(-5).reverse().map((task) => (
                   <li key={task.id_tasks} className="tasks-card">
                     <div className="task-content">
                       <h4 className="task-title">{task.name}</h4>

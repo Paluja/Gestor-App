@@ -122,11 +122,11 @@ function AddAward() {
       <div className="awards-container">
           <h2>Premios conseguidos</h2>
           <div className="awards-bx">              
-              {awards.length > 0 ? awards.slice(0, 5).map((award) => (
+              {awards.length > 0 ? awards.slice(-5).map((award) => (
                 <div key={award.id_award} className='awards-card'>
                   <div className="award-content">
                     <h4 className='award-title'>{award.name}</h4>
-                    <p className='award-points'>{award.total_points } / {award.points_earned}</p>
+                    <p className='award-points'>{award.total_points } / {award.total_points}</p>
                   </div>
                   <div className="progressBar-bx">
                     <ProgressBar progress={

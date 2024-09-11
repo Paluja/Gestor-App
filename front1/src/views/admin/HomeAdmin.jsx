@@ -212,7 +212,7 @@ function HomeAdmin() {
                         <h4>Completadas</h4>
                         <ul>
                             {completedTasks.length > 0 ? (
-                                completedTasks.slice(0, 5).map((task) => (
+                                completedTasks.slice(-5).reverse().map((task) => (
                                     <li key={task.id_tasks} className="tasks-card">
                                         <div className="task-content">
                                             <h4 className="task-title">{task.name}</h4>

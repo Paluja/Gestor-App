@@ -23,9 +23,9 @@ function LoginAdmin() {
       >
         {({isSubmitting}) => (
           <Form>
-            <Input label="email" name='email' type='text' placeholder='Email' />
-            <Input label="password" name='password' type='text' placeholder='Password' />
-            <button disabled={isSubmitting} type='submit'>Login</button>
+            <Input label="Email" name='email' type='text' placeholder='Email' />
+            <Input label="Contraseña" name='password' type='password' placeholder='Contraseña' required />
+            <button className='btn-task' disabled={isSubmitting} type='submit'>Login</button>
           </Form>
         )}
       </Formik>
